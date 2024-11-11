@@ -188,8 +188,7 @@ const Footer = () => {
           gap={4}
         >
           <Text fontSize="sm" textAlign={{ base: "center", md: "left" }}>
-            ©2023 Pethub.com All trademarks are owned by Société des Produits
-            Nestlé S.A., or used with permission.
+            ©2024 Pethub.com
           </Text>
           <Stack direction="row" spacing={6}>
             <SocialButton label="Facebook" href="#">
