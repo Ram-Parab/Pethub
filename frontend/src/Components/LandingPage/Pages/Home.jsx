@@ -56,9 +56,13 @@ const Home = () => {
             </Heading>
             <Stack
                direction={{ base: "column", md: "row" }}
-               gap={20}
+               gap={8}
                bg={"#EDE7F6"}
-               padding={30}
+               padding={8}
+               borderRadius="xl"
+               boxShadow="lg"
+               _hover={{ transform: "translateY(-5px)" }}
+               transition="transform 0.3s ease"
             >
                <Box>
                   <img
@@ -220,9 +224,13 @@ const Home = () => {
             </Heading>
             <Stack
                direction={{ base: "column", md: "row" }}
-               gap={20}
+               gap={8}
                bg={"#EDE7F6"}
-               padding={30}
+               padding={8}
+               borderRadius="xl"
+               boxShadow="lg"
+               _hover={{ transform: "translateY(-5px)" }}
+               transition="transform 0.3s ease"
             >
                <Box>
                   <img
