@@ -5,12 +5,14 @@ import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import signuImage from "./images/pets4.png";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, Toaster } from 'sonner';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -18,6 +20,8 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
+
+    const loadingToast = toast.loading('Logging in...');
     fetch("https://tiny-red-armadillo-cape.cyclic.cloud/users/login", {
       method: "POST",
       headers: {
@@ -27,17 +31,25 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        localStorage.setItem("token", JSON.stringify(res.token));
-        localStorage.setItem("user", JSON.stringify(user.email));
-        navigate("/");
-        console.log(res);
+        toast.dismiss(loadingToast);
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          localStorage.setItem("token", JSON.stringify(res.token));
+          localStorage.setItem("user", JSON.stringify(user.email));
+          toast.success('Login successful!');
+          navigate("/");
+        }
       })
-      .catch((err) => console.log(err));
-    // console.log(user);
+      .catch((err) => {
+        toast.dismiss(loadingToast);
+        toast.error('Invalid credentials or server error');
+      });
   };
 
   return (
     <div className="main-container">
+      <Toaster position="bottom-center" richColors />
       <div className="login-main">
         <div className="login-image">
           <img src={signuImage} alt="" />
@@ -48,21 +60,8 @@ function Login() {
               <h2>Login</h2>
             </div>
           </div>
-          {/* <div className="login-social">
-            <span className="google">
-              <FcGoogle />
-              <span>Google</span>
-            </span>
-            or
-            <span className="facebook">
-              <BsFacebook />
-              <span>Facebook</span>
-            </span>
-          </div> */}
           <form id="login-form" onSubmit={handleLogin}>
-            <br />
             <div className="input-group user-input-wrp">
-              <br />
               <input
                 className="inputText"
                 type="email"
@@ -74,9 +73,7 @@ function Login() {
               />
               <span className="floating-label">Email</span>
             </div>
-            <br />
             <div className="input-group user-input-wrp password-container">
-              <br />
               <div>
                 <input
                   className="inputText"
@@ -92,15 +89,13 @@ function Login() {
                   {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <br />
             </div>
-            <br />
             <button type="submit" className="signup-button">
               Login
             </button>
           </form>
           <p className="login-text">
-            Dont have an Account? <Link to="/signup">Signup here</Link>
+            Don't have an Account? <Link to="/signup">Signup here</Link>
           </p>
         </div>
       </div>

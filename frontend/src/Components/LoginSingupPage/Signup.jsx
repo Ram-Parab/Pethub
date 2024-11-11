@@ -4,7 +4,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import signuImage from "./images/pets3.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, Toaster } from 'sonner';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +13,7 @@ function Signup() {
   const [Lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -20,6 +22,8 @@ function Signup() {
   const handleSignup = (e) => {
     e.preventDefault();
     const user = { Firstname, Lastname, email, password };
+
+    const loadingToast = toast.loading('Creating your account...');
     fetch("https://tiny-red-armadillo-cape.cyclic.cloud/users/register", {
       method: "POST",
       headers: {
@@ -28,13 +32,24 @@ function Signup() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    // console.log(user);
+      .then((res) => {
+        toast.dismiss(loadingToast);
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          toast.success('Account created successfully!');
+          navigate('/login');
+        }
+      })
+      .catch((err) => {
+        toast.dismiss(loadingToast);
+        toast.error('Something went wrong. Please try again.');
+      });
   };
 
   return (
     <div className="main-container">
+      <Toaster position="bottom-center" richColors />
       <div className="signup-main">
         <div className="signp-image">
           <img src={signuImage} alt="" />
@@ -72,7 +87,6 @@ function Signup() {
                 <span className="floating-label">Last Name</span>
               </div>
             </div>
-
             <div className="user-input-wrp email-field">
               <input
                 className="inputText"
@@ -85,7 +99,6 @@ function Signup() {
               />
               <span className="floating-label">Email</span>
             </div>
-
             <div className="user-input-wrp password-field">
               <div>
                 <input
@@ -103,7 +116,6 @@ function Signup() {
                 </div>
               </div>
             </div>
-
             <button type="submit" className="signup-button">
               Sign Up
             </button>
