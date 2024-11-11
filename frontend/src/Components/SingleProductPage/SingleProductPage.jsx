@@ -1,106 +1,139 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { styled } from "styled-components"
+import { Box, Heading, Text, Badge, Button, VStack, HStack, Icon } from "@chakra-ui/react";
+import { FaMapMarkerAlt, FaBirthdayCake, FaRuler, FaVenusMars } from "react-icons/fa";
 
 const SingleProductPage = () => {
-    const { id } = useParams()
+    const { id } = useParams();
     const data = useSelector((store) => store.petData.data);
-    var singleProduct = data.find(ele => ele._id === id)
-    console.log(singleProduct)
+    const singleProduct = data.find(ele => ele._id === id);
 
-    return <DIV>
-        {singleProduct &&
-            <div className="singlePage">
-                <div className="single-img">
-                    <img src={singleProduct.image} alt="Puppyimage" />
-                </div>
-                <div className="single-details">
-                    <h1>Name:{singleProduct.name}</h1>
-                    <h3>Breed:{singleProduct.breed}</h3>
-                    <h3>Age:{singleProduct.age}</h3>
-                    <p>Gender:{singleProduct.gender}</p>
-                    <p>Size:{singleProduct.size}</p>
-                </div>
-            </div>
-        }
+    return (
+        <Box maxW="1200px" mx="auto" px={4} py={8} mt="100px">
+            {singleProduct && (
+                <Box 
+                    display={{ base: "block", md: "flex" }}
+                    gap={8}
+                    bg="white"
+                    p={6}
+                    borderRadius="xl"
+                    boxShadow="lg"
+                >
+                    {/* Image Section */}
+                    <Box 
+                        flex="1"
+                        borderRadius="xl"
+                        overflow="hidden"
+                        boxShadow="md"
+                    >
+                        <img 
+                            src={singleProduct.image} 
+                            alt={singleProduct.name}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                borderRadius: "12px"
+                            }}
+                        />
+                    </Box>
 
+                    {/* Details Section */}
+                    <VStack 
+                        flex="1"
+                        align="start"
+                        spacing={6}
+                        p={6}
+                        bg="gray.50"
+                        borderRadius="xl"
+                    >
+                        <Box>
+                            <Badge 
+                                colorScheme="purple" 
+                                fontSize="md" 
+                                px={3} 
+                                py={1} 
+                                borderRadius="full"
+                                mb={3}
+                            >
+                                {singleProduct.age}
+                            </Badge>
+                            <Heading 
+                                size="2xl" 
+                                color="purple.700"
+                                mb={2}
+                            >
+                                {singleProduct.name}
+                            </Heading>
+                        </Box>
 
-    </DIV>
-}
+                        <VStack align="start" spacing={4} w="100%">
+                            <HStack spacing={4}>
+                                <Icon as={FaMapMarkerAlt} color="purple.500" boxSize={5} />
+                                <Text fontSize="lg" color="gray.600">
+                                    7 miles away
+                                </Text>
+                            </HStack>
 
-const DIV = styled.div`
-    .singlePage{
-        display:flex;
-        justify-content: space-evenly;
-        margin:50px;
-        margin-top:120px;
-        padding:50px;
-        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-        border-radius:10px;
-    }
-    .single-img{
-        width:50%;
-    }
-    .single-img img{
-        width:100%;
-        height:600px;
-        border-radius: 20px;
-    }
-    .single-details{
-        border:1px solid gray;
-        width:50%;
-        height:600px;
-        padding:50px;
-        border-radius: 20px;
-        text-align: left;
-        line-height: 80px;
-    }
-    .single-details h1{
-        font-size: 40px;
-        font-weight: 800;
-    }
-    .single-details h3{
-       
-        font-size: 25px;
-        font-weight: 700;
-    }
-    .single-details p{
-        
-        font-size: 18px;
-        font-weight:200;
-    }
-    @media (max-width: 768px) { 
-        .singlePage{
-            display: flex;
-            flex-direction: column;
-        }
-        .single-img{
-        width:100%;
-    }
-        .single-img img{
-        width:100%;
-        height:600px;
-        border-radius: 20px;
-    }
-    .single-details{
-        border:1px solid gray;
-        width:100%;
-        height:600px;
-        padding:50px;
-        border-radius: 20px;
-        text-align: left;
-        line-height: 80px;
-    }
-    }
+                            <HStack spacing={4}>
+                                <Icon as={FaBirthdayCake} color="purple.500" boxSize={5} />
+                                <Text fontSize="lg" color="gray.700">
+                                    <Text as="span" fontWeight="bold">Breed: </Text>
+                                    {singleProduct.breed}
+                                </Text>
+                            </HStack>
 
-    @media (max-width: 600px) { 
-        .singlePage{
-            display: flex;
-            flex-direction: column;
-            padding:0px;
-        }
-    }
-`;
+                            <HStack spacing={4}>
+                                <Icon as={FaVenusMars} color="purple.500" boxSize={5} />
+                                <Text fontSize="lg" color="gray.700">
+                                    <Text as="span" fontWeight="bold">Gender: </Text>
+                                    {singleProduct.gender}
+                                </Text>
+                            </HStack>
+
+                            <HStack spacing={4}>
+                                <Icon as={FaRuler} color="purple.500" boxSize={5} />
+                                <Text fontSize="lg" color="gray.700">
+                                    <Text as="span" fontWeight="bold">Size: </Text>
+                                    {singleProduct.size}
+                                </Text>
+                            </HStack>
+                        </VStack>
+
+                        <Box w="100%" pt={4}>
+                            <Button
+                                colorScheme="purple"
+                                size="lg"
+                                w="100%"
+                                borderRadius="full"
+                                _hover={{
+                                    transform: "translateY(-2px)",
+                                    boxShadow: "lg",
+                                }}
+                                transition="all 0.3s"
+                            >
+                                Adopt {singleProduct.name}
+                            </Button>
+                        </Box>
+
+                        <Box 
+                            bg="purple.50" 
+                            p={4} 
+                            borderRadius="lg" 
+                            w="100%"
+                        >
+                            <Text fontSize="md" color="purple.700">
+                                Meet {singleProduct.name}, a loving {singleProduct.breed} looking for a forever home. 
+                                {singleProduct.name} is {singleProduct.age} and would make a perfect companion for 
+                                the right family.
+                            </Text>
+                        </Box>
+                    </VStack>
+                </Box>
+            )}
+        </Box>
+    );
+};
 
 export default SingleProductPage;
