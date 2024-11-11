@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Stack, Text, Input } from "@chakra-ui/react";
+import { Box, Button, Heading, Stack, Text, Input, Image } from "@chakra-ui/react";
 import "./Home.css"
 import React from "react";
 import one from "../Images/1.png";
@@ -45,298 +45,268 @@ const Home = () => {
          <Box mt="-30px" bg="#3232af">
             .
          </Box>
-         <Box>
-            <Heading color={"#6504b5"} p={"5% 20%"} mt="50px">
-               Pets Available for Adoption Nearby
-            </Heading>
-            <Stack
-               direction={{ base: "column", md: "row" }}
-               gap={8}
-               bg={"#EDE7F6"}
-               padding={8}
-               borderRadius="xl"
-               boxShadow="lg"
-               _hover={{ transform: "translateY(-5px)" }}
-               transition="transform 0.3s ease"
-            >
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                        /* Optional: Position the image within the container */
-                        //   position: "absolute",
-                        //   top: 0;
-                        //   left: 0;
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/63291329/1/?bust=1683800934&width=316"
-                     alt=""
-                  />
-                  {/* <Text fontWeight={600}>Boo</Text> */}
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Boo
-                  </Heading>
-                  {/* <h2>Boo</h2> */}
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/64094873/1/?bust=1683454882&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Rallo
-                  </Heading>
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/59534213/1/?bust=1683800901&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Bravo
-                  </Heading>
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/55064029/1/?bust=1683800944&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Tullo
-                  </Heading>
-               </Box>
-            </Stack>
-         </Box>
+        
 
-         <Box >
+         <Box className="planning-section" py={16}>
             <Heading
                textAlign="center"
-               fontFamily="arial helvetica "
-               //  line-height: 1.2;
-               //  font-size: 30px;
-               //  font-weight: 400;
+               fontSize="3xl"
+               fontWeight="700"
                color="#4d4751"
-            //  margin-bottom: 40px;
+               mb={12}
             >
                Planning to Adopt a Pet?
             </Heading>
             <Stack
-               direction={{ base: "column", md: "row" }}
-               gap={"40px"}
-               justifyContent={"center"}
-               alignItems={"center"}
+               direction={{ base: "column", lg: "row" }}
+               spacing={8}
+               maxW="1200px"
+               mx="auto"
+               px={4}
             >
-               <Box w={400}>
-                  <Heading
-                     color={"#004c81"}
-                     fontSize={"20px"}
-                     pt={10}
-                     fontFamily={"Nexa-Bold"}
-                     fontWeight={400}
-                  >
-                     Checklist for New Adopters
-                  </Heading>
-                  <Text>Help make the transition, as smooth as possible.</Text>
+               <Box 
+                  className="info-card"
+                  flex={1}
+                  bg="white"
+                  p={8}
+                  borderRadius="xl"
+                  boxShadow="lg"
+                  transition="all 0.3s"
+                  _hover={{ transform: "translateY(-8px)" }}
+                  display="flex"
+                  flexDirection="column"
+                  height="400px"
+               >
+                  <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+                     <Heading
+                        color="#004c81"
+                        fontSize="xl"
+                        fontWeight="600"
+                        mb={4}
+                     >
+                        Checklist for New Adopters
+                     </Heading>
+                     <Text color="gray.600" mb={6}>
+                        Help make the transition, as smooth as possible.
+                     </Text>
+                  </Box>
                   <Button
-                     m={10}
-                     bg={"white"}
-                     border={"2px solid #20ccf8"}
+                     bg="white"
                      color="#004c81"
-                     borderRadius={"12rem"}
+                     border="2px solid #20ccf8"
+                     borderRadius="full"
+                     px={8}
+                     py={6}
+                     _hover={{
+                        bg: "#20ccf8",
+                        color: "white",
+                        transform: "translateY(-2px)"
+                     }}
+                     transition="all 0.3s"
+                     mt="auto"
                   >
                      Learn More
                   </Button>
                </Box>
-               <Box w={400}>
-                  <Heading
-                     color={"#004c81"}
-                     fontSize={"20px"}
-                     pt={10}
-                     fontFamily={"Nexa-Bold"}
-                     fontWeight={400}
-                  >
-                     COVID-19 Resources
-                  </Heading>
-                  <Text>
-                     Get the latest on adoption processes, learn how local
-                     shelters and rescue groups are adapting and find out what
-                     you can do to help dogs and cats in need right now.
-                  </Text>
+
+               <Box 
+                  className="info-card"
+                  flex={1}
+                  bg="white"
+                  p={8}
+                  borderRadius="xl"
+                  boxShadow="lg"
+                  transition="all 0.3s"
+                  _hover={{ transform: "translateY(-8px)" }}
+                  display="flex"
+                  flexDirection="column"
+                  height="400px"
+               >
+                  <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+                     <Heading
+                        color="#004c81"
+                        fontSize="xl"
+                        fontWeight="600"
+                        mb={4}
+                     >
+                        COVID-19 Resources
+                     </Heading>
+                     <Text color="gray.600" mb={6}>
+                        Get the latest on adoption processes, learn how local shelters and rescue groups are adapting and find out what you can do to help pets in need right now.
+                     </Text>
+                  </Box>
                   <Button
-                     m={10}
-                     bg={"white"}
-                     border={"2px solid #20ccf8"}
+                     bg="white"
                      color="#004c81"
-                     borderRadius={"12rem"}
+                     border="2px solid #20ccf8"
+                     borderRadius="full"
+                     px={8}
+                     py={6}
+                     _hover={{
+                        bg: "#20ccf8",
+                        color: "white",
+                        transform: "translateY(-2px)"
+                     }}
+                     transition="all 0.3s"
+                     mt="auto"
                   >
                      Learn More
                   </Button>
-                  
                </Box>
-               <Box w={300}>
-                  <Heading
-                     color={"#004c81"}
-                     fontSize={"20px"}
-                     pt={10}
-                     fontFamily={"Nexa-Bold"}
-                     fontWeight={400}
-                  >
-                     Pet Adoption FAQs
-                  </Heading>
-                  <Text>Get answers to questions you haven't thought of.</Text>
+
+               <Box 
+                  className="info-card"
+                  flex={1}
+                  bg="white"
+                  p={8}
+                  borderRadius="xl"
+                  boxShadow="lg"
+                  transition="all 0.3s"
+                  _hover={{ transform: "translateY(-8px)" }}
+                  display="flex"
+                  flexDirection="column"
+                  height="400px"
+               >
+                  <Box flex="1" display="flex" flexDirection="column" justifyContent="center">
+                     <Heading
+                        color="#004c81"
+                        fontSize="xl"
+                        fontWeight="600"
+                        mb={4}
+                     >
+                        Pet Adoption FAQs
+                     </Heading>
+                     <Text color="gray.600" mb={6}>
+                        Get answers to questions you haven't thought of.
+                     </Text>
+                  </Box>
                   <Button
-                     m={10}
-                     bg={"white"}
-                     border={"2px solid #20ccf8"}
+                     bg="white"
                      color="#004c81"
-                     borderRadius={"12rem"}
+                     border="2px solid #20ccf8"
+                     borderRadius="full"
+                     px={8}
+                     py={6}
+                     _hover={{
+                        bg: "#20ccf8",
+                        color: "white",
+                        transform: "translateY(-2px)"
+                     }}
+                     transition="all 0.3s"
+                     mt="auto"
                   >
                      Learn More
                   </Button>
-                  
                </Box>
             </Stack>
          </Box>
-         <Box margin={["50px 20px", "150px 100px"]}>
-            <Heading color={"#6504b5"} mb="30px">
+
+         <Box className="pets-section" py={16} px={4}>
+            <Heading 
+               color="#6504b5" 
+               textAlign="center"
+               fontSize="3xl"
+               fontWeight="700"
+               mb={12}
+            >
                Pets Available for Adoption Nearby
             </Heading>
             <Stack
                direction={{ base: "column", md: "row" }}
-               gap={8}
-               bg={"#EDE7F6"}
-               padding={8}
-               borderRadius="xl"
-               boxShadow="lg"
-               _hover={{ transform: "translateY(-5px)" }}
-               transition="transform 0.3s ease"
+               spacing={8}
+               maxW="1200px"
+               mx="auto"
             >
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                        /* Optional: Position the image within the container */
-                        //   position: "absolute",
-                        //   top: 0;
-                        //   left: 0;
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/64228600/1/?bust=1683713812&width=450"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Rambo
-                  </Heading>
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/55064016/1/?bust=1683800914&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Boo
-                  </Heading>
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48017216/1/?bust=1591006865&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Boo
-                  </Heading>
-               </Box>
-               <Box>
-                  <img
-                     style={{
-                        width: "100%",
-                        height: "70%",
-                        objectFit: "cover",
-                     }}
-                     src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/55064029/1/?bust=1683800944&width=316"
-                     alt=""
-                  />
-                  <Heading p={"20px 0px"} fontSize={'50px'} fontFamily={'body'} fontWeight={500} color={"purple"}>
-                     Boo
-                  </Heading>
-               </Box>
+               {[
+                  { name: "Rambo", image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/64228600/1/?bust=1683713812&width=450" },
+                  { name: "Boo", image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/55064016/1/?bust=1683800914&width=316" },
+                  { name: "Luna", image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48017216/1/?bust=1591006865&width=316" },
+                  { name: "Max", image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/55064029/1/?bust=1683800944&width=316" }
+               ].map((pet, index) => (
+                  <Box
+                     key={index}
+                     className="pet-card"
+                     flex={1}
+                     bg="white"
+                     borderRadius="xl"
+                     overflow="hidden"
+                     boxShadow="lg"
+                     transition="all 0.3s"
+                     _hover={{ transform: "translateY(-8px)" }}
+                  >
+                     <Box position="relative" overflow="hidden">
+                        <Image
+                           src={pet.image}
+                           alt={pet.name}
+                           w="100%"
+                           h="300px"
+                           objectFit="cover"
+                           transition="transform 0.3s"
+                           _hover={{ transform: "scale(1.05)" }}
+                        />
+                     </Box>
+                     <Box p={6} textAlign="center">
+                        <Heading
+                           fontSize="2xl"
+                           color="purple.700"
+                           fontWeight="600"
+                        >
+                           {pet.name}
+                        </Heading>
+                     </Box>
+                  </Box>
+               ))}
             </Stack>
          </Box>
+
          <Box p={10}>
             <div className="article">
-               <Box
-                  boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px"
-                  borderRadius={"25px"}
-                  className="article-box"
-               >
+               <Box className="article-box">
                   <img
-                     style={{ borderRadius: "25px" }}
-                     src="https://www.petfinder.com/sites/default/files/styles/card/public/images/content/47.jpeg?itok=HNT_yv1F"
-                     alt=""
+                    src="https://www.petfinder.com/sites/default/files/styles/card/public/images/content/47.jpeg?itok=HNT_yv1F"
+                    alt=""
                   />
-                  <Heading p={5}>Dogs Adoption Article</Heading>
-                  <Text p={5}>Learn about caring for your new dog</Text>
-                  <Button
-                     bg={"white"}
-                     border={"2px solid #20ccf8"}
-                     p={"10px 80px"}
-                     color="#004c81"
-                     borderRadius={"12rem"}
-                     className="learn-more"
-                  >
-                     Learn More
-                  </Button>
-                  {/* <Button m={5}>LEARN MORE</Button> */}
+                  <div className="content-wrapper">
+                    <Heading mb={3}>Dogs Adoption Article</Heading>
+                    <Text mb={4}>Learn about caring for your new dog</Text>
+                  </div>
+                  <div className="button-wrapper">
+                    <Button
+                      bg={"white"}
+                      border={"2px solid #20ccf8"}
+                      p={"10px 80px"}
+                      color="#004c81"
+                      borderRadius={"12rem"}
+                      className="learn-more"
+                      w="100%"
+                    >
+                      Learn More
+                    </Button>
+                  </div>
                </Box>
-               <Box
-                  boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px"
-                  borderRadius={"25px"}
-                  className="article-box"
-               >
+
+               <Box className="article-box">
                   <img
-                     style={{ borderRadius: "25px" }}
-                     src="https://www.petfinder.com/sites/default/files/styles/card/public/images/content/PF2015_267_Kittens_Shelter-630.jpg?itok=JGTdJJaD"
-                     alt=""
+                    src="https://www.petfinder.com/sites/default/files/styles/card/public/images/content/PF2015_267_Kittens_Shelter-630.jpg?itok=JGTdJJaD"
+                    alt=""
                   />
-                  <Heading p={5}>Cat Adoption Article</Heading>
-                  <Text p={5}>Helpful insights on what to expect</Text>
-                  <Button
-                     bg={"white"}
-                     border={"2px solid #20ccf8"}
-                     p={"10px 80px"}
-                     color="#004c81"
-                     borderRadius={"12rem"}
-                     className="learn-more"
-                  >
-                     Learn More
-                  </Button>
+                  <div className="content-wrapper">
+                    <Heading mb={3}>Cat Adoption Article</Heading>
+                    <Text mb={4}>Helpful insights on what to expect</Text>
+                  </div>
+                  <div className="button-wrapper">
+                    <Button
+                      bg={"white"}
+                      border={"2px solid #20ccf8"}
+                      p={"10px 80px"}
+                      color="#004c81"
+                      borderRadius={"12rem"}
+                      className="learn-more"
+                      w="100%"
+                    >
+                      Learn More
+                    </Button>
+                  </div>
                </Box>
             </div>
          </Box>

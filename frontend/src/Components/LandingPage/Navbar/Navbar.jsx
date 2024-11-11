@@ -22,7 +22,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import logo from "../image/logo.png";
+import logo from "../image/logo.svg";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
