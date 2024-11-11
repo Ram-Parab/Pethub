@@ -26,17 +26,13 @@ import logo from "../image/logo.svg";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [user, setUser] = useState("");
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -44,23 +40,45 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser && storedUser !== "undefined") {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("user"); // Clear invalid data
+    const checkUserAuth = () => {
+      const storedUser = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
+      
+      if (storedUser && token) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUserData(parsedUser);
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          setUserData(null);
+        }
+      } else {
+        setUserData(null);
       }
-    }
+    };
+
+    checkUserAuth();
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser("");
-    navigate("/");
+    const token = localStorage.getItem("token");
+    
+    fetch("http://localhost:8080/logout", {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUserData(null);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
 
   return (
@@ -74,6 +92,7 @@ const Navbar = () => {
       transition="all 0.3s ease"
       boxShadow={isScrolled ? "sm" : "none"}
       backdropFilter={isScrolled ? "none" : "blur(8px)"}
+      fontFamily="'Poppins', sans-serif"
     >
       <Flex
         h="80px"
@@ -83,88 +102,80 @@ const Navbar = () => {
         mx="auto"
         px={6}
       >
-        {/* Logo */}
         <Link to="/">
-          <Image 
-            src={logo} 
-            h="50px" 
-          />
+          <Image src={logo} h="50px" />
         </Link>
 
-        {/* Desktop Navigation */}
         <HStack spacing={8} display={{ base: "none", md: "flex" }}>
           <Link to="/">
-            <Text
-              fontSize="md"
+            <Text 
+              fontSize="16px"
               fontWeight="500"
               color={isScrolled ? "gray.700" : "white"}
-              _hover={{ 
-                color: isScrolled ? "purple.500" : "purple.200",
-                transform: "translateY(-1px)"
-              }}
+              _hover={{ color: isScrolled ? "purple.500" : "purple.200" }}
               transition="all 0.3s ease"
             >
               Home
             </Text>
           </Link>
           <Link to="/pets">
-            <Text
-              fontSize="md"
+            <Text 
+              fontSize="16px"
               fontWeight="500"
               color={isScrolled ? "gray.700" : "white"}
-              _hover={{ 
-                color: isScrolled ? "purple.500" : "purple.200",
-                transform: "translateY(-1px)"
-              }}
+              _hover={{ color: isScrolled ? "purple.500" : "purple.200" }}
               transition="all 0.3s ease"
             >
               Adopt Pet
             </Text>
           </Link>
           <Link to="/services">
-            <Text
-              fontSize="md"
+            <Text 
+              fontSize="16px"
               fontWeight="500"
               color={isScrolled ? "gray.700" : "white"}
-              _hover={{ 
-                color: isScrolled ? "purple.500" : "purple.200",
-                transform: "translateY(-1px)"
-              }}
+              _hover={{ color: isScrolled ? "purple.500" : "purple.200" }}
               transition="all 0.3s ease"
             >
               Services
             </Text>
           </Link>
 
-          {/* User Menu */}
-          {user ? (
+          {userData ? (
             <Menu>
               <MenuButton
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
                 variant="ghost"
                 color={isScrolled ? "gray.700" : "white"}
-                _hover={{ 
-                  bg: isScrolled ? "purple.50" : "whiteAlpha.200"
-                }}
+                fontSize="16px"
+                fontWeight="500"
+                _hover={{ bg: isScrolled ? "purple.50" : "whiteAlpha.200" }}
               >
-                {user}
+                Welcome, {userData.name}
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                <MenuItem 
+                  onClick={handleLogout}
+                  fontSize="16px"
+                  fontWeight="500"
+                >
+                  Logout
+                </MenuItem>
               </MenuList>
             </Menu>
           ) : (
             <HStack spacing={4}>
               <Link to="/login">
-                <Button
-                  variant="ghost"
+                <Button 
+                  variant="ghost" 
                   color={isScrolled ? "gray.700" : "white"}
+                  fontSize="16px"
+                  fontWeight="500"
                   _hover={{ 
                     bg: isScrolled ? "purple.50" : "whiteAlpha.200",
                     transform: "translateY(-1px)"
                   }}
-                  transition="all 0.3s ease"
                 >
                   Login
                 </Button>
@@ -173,11 +184,12 @@ const Navbar = () => {
                 <Button
                   bg={isScrolled ? "purple.600" : "white"}
                   color={isScrolled ? "white" : "purple.600"}
+                  fontSize="16px"
+                  fontWeight="500"
                   _hover={{
                     bg: isScrolled ? "purple.700" : "purple.50",
                     transform: "translateY(-1px)"
                   }}
-                  transition="all 0.3s ease"
                 >
                   Sign Up
                 </Button>
@@ -186,7 +198,6 @@ const Navbar = () => {
           )}
         </HStack>
 
-        {/* Mobile Menu Button */}
         <IconButton
           display={{ base: "flex", md: "none" }}
           aria-label="Open menu"
@@ -195,46 +206,57 @@ const Navbar = () => {
           variant="ghost"
           icon={<HamburgerIcon />}
           onClick={onOpen}
-          _hover={{
-            bg: isScrolled ? "purple.50" : "whiteAlpha.200"
-          }}
         />
 
-        {/* Mobile Drawer */}
         <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent fontFamily="'Poppins', sans-serif">
             <DrawerCloseButton />
-            <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
+            <DrawerHeader fontSize="18px" fontWeight="600">Menu</DrawerHeader>
             <DrawerBody>
               <VStack spacing={4} align="stretch">
                 <Link to="/" onClick={onClose}>
-                  <Text py={2}>Home</Text>
+                  <Text fontSize="16px" fontWeight="500">Home</Text>
                 </Link>
                 <Link to="/pets" onClick={onClose}>
-                  <Text py={2}>Adopt Pet</Text>
+                  <Text fontSize="16px" fontWeight="500">Adopt Pet</Text>
                 </Link>
                 <Link to="/services" onClick={onClose}>
-                  <Text py={2}>Services</Text>
+                  <Text fontSize="16px" fontWeight="500">Services</Text>
                 </Link>
-                {user ? (
+                {userData ? (
                   <>
-                    <Text py={2} color="gray.500">
-                      {user}
+                    <Text fontSize="16px" fontWeight="500" color="gray.500">
+                      Welcome, {userData.name}
                     </Text>
-                    <Button colorScheme="purple" onClick={handleLogout}>
+                    <Button 
+                      colorScheme="purple" 
+                      onClick={handleLogout}
+                      fontSize="16px"
+                      fontWeight="500"
+                    >
                       Logout
                     </Button>
                   </>
                 ) : (
                   <>
                     <Link to="/login" onClick={onClose}>
-                      <Button w="full" variant="outline" colorScheme="purple">
+                      <Button 
+                        w="full" 
+                        variant="outline"
+                        fontSize="16px"
+                        fontWeight="500"
+                      >
                         Login
                       </Button>
                     </Link>
                     <Link to="/signup" onClick={onClose}>
-                      <Button w="full" colorScheme="purple">
+                      <Button 
+                        w="full" 
+                        colorScheme="purple"
+                        fontSize="16px"
+                        fontWeight="500"
+                      >
                         Sign Up
                       </Button>
                     </Link>

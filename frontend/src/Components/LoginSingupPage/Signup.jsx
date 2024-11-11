@@ -9,8 +9,8 @@ import { toast, Toaster } from 'sonner';
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const [Firstname, setFirstname] = useState("");
-  const [Lastname, setLastname] = useState("");
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,10 +21,10 @@ function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    const user = { Firstname, Lastname, email, password };
+    const user = { FirstName, LastName, email, password };
 
     const loadingToast = toast.loading('Creating your account...');
-    fetch("https://tiny-red-armadillo-cape.cyclic.cloud/users/register", {
+    fetch("http://localhost:8080/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,6 +36,8 @@ function Signup() {
         toast.dismiss(loadingToast);
         if (res.error) {
           toast.error(res.error);
+        } else if (res.msg === "email already exist") {
+          toast.error(res.msg);
         } else {
           toast.success('Account created successfully!');
           navigate('/login');
@@ -68,8 +70,8 @@ function Signup() {
                   type="text"
                   id="firstname"
                   name="firstname"
-                  value={Firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  value={FirstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   required
                 />
                 <span className="floating-label">First Name</span>
@@ -80,8 +82,8 @@ function Signup() {
                   type="text"
                   id="lastname"
                   name="lastname"
-                  value={Lastname}
-                  onChange={(e) => setLastname(e.target.value)}
+                  value={LastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   required
                 />
                 <span className="floating-label">Last Name</span>

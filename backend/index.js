@@ -1,4 +1,5 @@
 const express=require("express");
+const cors = require("cors");
 const { connection } = require("./db");
 const { userRouter } = require("./Routes/userRoutes");
 const { petRouter } = require("./Routes/petRouter");
@@ -6,6 +7,7 @@ const { blackModel } = require("./Models/BlackList");
 const { serviceRouter } = require("./Routes/serviceRouter");
 
 const app=express()
+app.use(cors());
 app.use(express.json());
 app.use("/users",userRouter)
 app.use("/pet",petRouter)

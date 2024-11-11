@@ -22,7 +22,7 @@ function Login() {
     const user = { email, password };
 
     const loadingToast = toast.loading('Logging in...');
-    fetch("https://tiny-red-armadillo-cape.cyclic.cloud/users/login", {
+    fetch("http://localhost:8080/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,13 +32,24 @@ function Login() {
       .then((res) => res.json())
       .then((res) => {
         toast.dismiss(loadingToast);
+        console.log("Login response:", res);
         if (res.error) {
           toast.error(res.error);
+        } else if (res.msg === "user does not exist") {
+          toast.error(res.msg);
+        } else if (res.err) {
+          toast.error("Invalid credentials");
         } else {
-          localStorage.setItem("token", JSON.stringify(res.token));
-          localStorage.setItem("user", JSON.stringify(user.email));
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("user", JSON.stringify({
+            name: res.user,
+            email: email
+          }));
           toast.success('Login successful!');
           navigate("/");
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         }
       })
       .catch((err) => {
