@@ -13,7 +13,10 @@ const ProductPage = () => {
   const { data, isLoading, isError } = useSelector((store) => store.petData);
 
   useEffect(() => {
-    // Create params object
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
     const params = {
       gender: searchParams.get("gender") || null,
       breed: searchParams.get("breed") || null,
@@ -21,14 +24,10 @@ const ProductPage = () => {
       size: searchParams.get("size") || null,
     };
 
-    // Log the params to verify they're correct
     console.log("Search Params:", params);
-
-    // Dispatch the action
     dispatch(getAllPets({ params }));
   }, [dispatch, searchParams]);
 
-  // Log the data to verify it's being received
   console.log("Redux Store Data:", data);
 
   return (
@@ -38,13 +37,7 @@ const ProductPage = () => {
       </Box>
       <Box className="cardsLayout">
         {data?.length === 0 ? (
-          <Box
-            textAlign="center"
-            fontSize="xl"
-            fontWeight="bold"
-            color="gray.500"
-            p={10}
-          >
+          <Box textAlign="center" fontSize="xl" fontWeight="bold" color="gray.500" p={10}>
             No pets found matching your criteria
           </Box>
         ) : (
