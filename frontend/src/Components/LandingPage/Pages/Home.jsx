@@ -14,11 +14,6 @@ const Home = () => {
             src="https://www.petfinder.com/sites/default/files/styles/hero_image_925_410/public/images/content/925%20hero%20image_0.jpg?itok=wmYYZbrt"
             alt=""
          /> */}
-            <div className="search">
-               <input placeholder="Search Terrier, Kitten, etc." />
-               <input placeholder="Asan Maina Municipality" />
-            </div>
-
             <h1
                className="banner-heading"
             >

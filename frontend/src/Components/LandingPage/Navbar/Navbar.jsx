@@ -1,205 +1,251 @@
-import React, { useRef, useState } from "react";
-import { AiFillHeart } from "react-icons/ai";
-import { CgChevronDown, CgChevronUp } from "react-icons/cg";
-// import { GiHamburgerMenu } from 'react-icons/gi';
-import { GiHamburgerMenu } from "react-icons/gi";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
+  Box,
+  Flex,
+  Button,
+  Image,
+  HStack,
+  Text,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Text,
-  Box,
-  useToast,
+  IconButton,
   useDisclosure,
-  Button,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
-  Input,
-  DrawerFooter,
+  VStack,
 } from "@chakra-ui/react";
-import "./Navbar.css"
-import { Link } from "react-router-dom";
-import { FaHeartCirclePlus, FaUserAlt } from "react-icons/fa";
+import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import logo from "../image/logo.png";
 
 const Navbar = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = useRef()
-  // const toast = useToast();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        localStorage.removeItem("user"); // Clear invalid data
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser("");
+    navigate("/");
   };
 
-  // Handle logout function
-  // let handleLogout = () => {
-  //   toast({
-  //     title: 'Logged Out',
-  //     status: 'error',
-  //     duration: 2000,
-  //     isClosable: true,
-  //   });
-  //   AuthLogoutFunc();
-  //   localStorage.clear();
-  // };
-
   return (
-    <div className="nav-main">
-      <div className="nav-left">
+    <Box
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex="1000"
+      bg={isScrolled ? "white" : "rgba(50, 50, 175, 0.9)"}
+      transition="all 0.3s ease"
+      boxShadow={isScrolled ? "sm" : "none"}
+      backdropFilter={isScrolled ? "none" : "blur(8px)"}
+    >
+      <Flex
+        h="80px"
+        alignItems="center"
+        justifyContent="space-between"
+        maxW="1400px"
+        mx="auto"
+        px={6}
+      >
+        {/* Logo */}
         <Link to="/">
-          <img width="180px" src={logo} alt="" />
+          <Image 
+            src={logo} 
+            h="50px" 
+          />
         </Link>
-        <h3
-          className="about-pets hidden"
-          onClick={toggleNav}
-          style={{ cursor: 'pointer', fontSize: '20px', fontWeight: 'bolder' }}
-        >
-          <span>ALL ABOUT PETS</span>
-          {isNavOpen ? <CgChevronUp /> : <CgChevronDown />}
-        </h3>
-        <h3 style={{ margin: '0 10px' }} className="hidden">
-          <Link to="/services">OUR SERVICES</Link>
-        </h3>
-      </div>
 
-      <div className="nav-right" style={{ display: 'flex', alignItems: 'center', width: '25%' }}>
-        <h3>
-          <AiFillHeart style={{ fontSize: '28px' }} />
-        </h3>
-        <div
-          style={{
-            borderLeft: '1px solid gray',
-            height: '50px',
-            margin: '0 8px',
-          }}
-        ></div>
-        <Link to="/signup">
-          <h3>Signup</h3>
-        </Link>
-        <Link to="/login">
-          <h3 style={{ marginLeft: '15px' }}>Login</h3>
-        </Link>
-      </div>
+        {/* Desktop Navigation */}
+        <HStack spacing={8} display={{ base: "none", md: "flex" }}>
+          <Link to="/">
+            <Text
+              fontSize="md"
+              fontWeight="500"
+              color={isScrolled ? "gray.700" : "white"}
+              _hover={{ 
+                color: isScrolled ? "purple.500" : "purple.200",
+                transform: "translateY(-1px)"
+              }}
+              transition="all 0.3s ease"
+            >
+              Home
+            </Text>
+          </Link>
+          <Link to="/pets">
+            <Text
+              fontSize="md"
+              fontWeight="500"
+              color={isScrolled ? "gray.700" : "white"}
+              _hover={{ 
+                color: isScrolled ? "purple.500" : "purple.200",
+                transform: "translateY(-1px)"
+              }}
+              transition="all 0.3s ease"
+            >
+              Adopt Pet
+            </Text>
+          </Link>
+          <Link to="/services">
+            <Text
+              fontSize="md"
+              fontWeight="500"
+              color={isScrolled ? "gray.700" : "white"}
+              _hover={{ 
+                color: isScrolled ? "purple.500" : "purple.200",
+                transform: "translateY(-1px)"
+              }}
+              transition="all 0.3s ease"
+            >
+              Services
+            </Text>
+          </Link>
 
-      {isNavOpen && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '60px',
-            left: 0,
-            width: '100%',
-            backgroundColor: '#3232af',
-            color: '#fff',
-            transition: 'height 0.5s',
-            border: '1px solid red',
-          }}
-        >
-          <ul
-            style={{
-              listStyleType: 'none',
-              padding: 0,
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              height: '60px',
-              alignItems: 'center',
-            }}
-          >
-            <li>
-              <Menu>
-                <MenuButton as={Text} isLazy={true} color="#fff">
-                  ADOPT OR GET INVOLVED
-                </MenuButton>
-                <MenuList color="#fff" bgColor="#3232af">
-                  <Link to="/AboutPetfinder">
-                    <MenuItem bgColor="#3232af">About petfinder</MenuItem>
-                  </Link>
-                  <Link to="/pets">
-                    <MenuItem bgColor="#3232af">Adopting Pets</MenuItem>
-                  </Link>
-                  <MenuItem bgColor="#3232af">
-                    Animals Shelter & Rescues
-                  </MenuItem>
-                  <MenuItem bgColor="#3232af">Petfinder Foundation</MenuItem>
-                </MenuList>
-              </Menu>
-            </li>
-            <li>
-              <Menu>
-                <MenuButton as={Text} isLazy={true} color="#fff">
-                  DOGS & PUPPIES
-                </MenuButton>
-                <MenuList color="#fff" bgColor="#3232af">
-                  <Link to="/pets">
-                    <MenuItem bgColor="#3232af">Dog Adoption</MenuItem>
-                  </Link>
-                  <MenuItem bgColor="#3232af">Dog Breeds</MenuItem>
-                  <Link to="/pets">
-                    <MenuItem bgColor="#3232af">Feeding your Dog</MenuItem>
-                  </Link>
-                  {/* Add more dog-related menu items */}
-                </MenuList>
-              </Menu>
-            </li>
-          </ul>
-        </div>
-      )}
-      <div className="hamburger">
-        <GiHamburgerMenu ref={btnRef} size={"40px"} onClick={onOpen} />
-        <>
-          {/* <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-        Open
-      </Button> */}
-          <Drawer
-            isOpen={isOpen}
-            placement='right'
-            onClose={onClose}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay
-            />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-
-              <DrawerBody>
-                <Link to="/signup">
-                  <h3>Signup</h3>
-                </Link>
-                <Link to="/login">
-                  <h3 style={{ marginLeft: '15px' }}>Login</h3>
-                </Link>
-              </DrawerBody>
-
-              <DrawerFooter>
-                <Button variant='outline' mr={3} onClick={onClose}>
-                  Cancel
+          {/* User Menu */}
+          {user ? (
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+                variant="ghost"
+                color={isScrolled ? "gray.700" : "white"}
+                _hover={{ 
+                  bg: isScrolled ? "purple.50" : "whiteAlpha.200"
+                }}
+              >
+                {user}
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <HStack spacing={4}>
+              <Link to="/login">
+                <Button
+                  variant="ghost"
+                  color={isScrolled ? "gray.700" : "white"}
+                  _hover={{ 
+                    bg: isScrolled ? "purple.50" : "whiteAlpha.200",
+                    transform: "translateY(-1px)"
+                  }}
+                  transition="all 0.3s ease"
+                >
+                  Login
                 </Button>
-                <Button colorScheme='blue'>Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-        </>
-      </div>
-      <div className="nav-footer">
-        <h3
-          className="about-pets"
-          onClick={toggleNav}
-          style={{ cursor: 'pointer', fontSize: '20px', fontWeight: 'bolder' }}
-        >
-          <span>ALL ABOUT PETS</span>
-          {isNavOpen ? <CgChevronUp /> : <CgChevronDown />}
-        </h3>
-        <h3 style={{ margin: '0 10px' }}>
-          <Link to="/services">OUR SERVICES</Link>
-        </h3>
-      </div>
-    </div>
+              </Link>
+              <Link to="/signup">
+                <Button
+                  bg={isScrolled ? "purple.600" : "white"}
+                  color={isScrolled ? "white" : "purple.600"}
+                  _hover={{
+                    bg: isScrolled ? "purple.700" : "purple.50",
+                    transform: "translateY(-1px)"
+                  }}
+                  transition="all 0.3s ease"
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </HStack>
+          )}
+        </HStack>
+
+        {/* Mobile Menu Button */}
+        <IconButton
+          display={{ base: "flex", md: "none" }}
+          aria-label="Open menu"
+          fontSize="20px"
+          color={isScrolled ? "gray.800" : "white"}
+          variant="ghost"
+          icon={<HamburgerIcon />}
+          onClick={onOpen}
+          _hover={{
+            bg: isScrolled ? "purple.50" : "whiteAlpha.200"
+          }}
+        />
+
+        {/* Mobile Drawer */}
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
+            <DrawerBody>
+              <VStack spacing={4} align="stretch">
+                <Link to="/" onClick={onClose}>
+                  <Text py={2}>Home</Text>
+                </Link>
+                <Link to="/pets" onClick={onClose}>
+                  <Text py={2}>Adopt Pet</Text>
+                </Link>
+                <Link to="/services" onClick={onClose}>
+                  <Text py={2}>Services</Text>
+                </Link>
+                {user ? (
+                  <>
+                    <Text py={2} color="gray.500">
+                      {user}
+                    </Text>
+                    <Button colorScheme="purple" onClick={handleLogout}>
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={onClose}>
+                      <Button w="full" variant="outline" colorScheme="purple">
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to="/signup" onClick={onClose}>
+                      <Button w="full" colorScheme="purple">
+                        Sign Up
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </VStack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Flex>
+    </Box>
   );
 };
 
