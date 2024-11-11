@@ -155,6 +155,11 @@ const Navbar = () => {
                 Welcome, {userData.name}
               </MenuButton>
               <MenuList>
+                <Link to="/service-requests">
+                  <MenuItem fontSize="16px" fontWeight="500">
+                    My Service Requests
+                  </MenuItem>
+                </Link>
                 <MenuItem 
                   onClick={handleLogout}
                   fontSize="16px"
@@ -229,6 +234,17 @@ const Navbar = () => {
                     <Text fontSize="16px" fontWeight="500" color="gray.500">
                       Welcome, {userData.name}
                     </Text>
+                    <Link to="/service-requests" onClick={onClose}>
+                      <Button 
+                        w="full" 
+                        variant="outline" 
+                        colorScheme="purple"
+                        fontSize="16px"
+                        fontWeight="500"
+                      >
+                        My Service Requests
+                      </Button>
+                    </Link>
                     <Button 
                       colorScheme="purple" 
                       onClick={handleLogout}

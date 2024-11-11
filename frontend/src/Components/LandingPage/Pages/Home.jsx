@@ -29,9 +29,7 @@ const Home = () => {
                   </Link>
                </Box>
                <Box boxSize={150} p={1} className="box" >
-                  <Link to={"/pets"}>
                      <img src={two} alt="2" style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }} />
-                  </Link>
                </Box>
                <Box boxSize={160} p={1} className="box" >
                   <img src={three} alt="3" style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }} />
