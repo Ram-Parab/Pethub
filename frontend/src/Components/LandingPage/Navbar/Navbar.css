@@ -1,0 +1,331 @@
+/* Navbar.css */
+/* .navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  background-color: #3232af;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.logo {
+  width: 100px;
+}
+
+.brand {
+  margin: 0 10px;
+}
+
+.menu-icon,
+.hamburger-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 16px;
+}
+
+.links-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+}
+
+.links-list li {
+  margin: 0 10px;
+}
+
+.links-list a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.heart-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Media queries for improved responsive design */
+/* @media (max-width: 1200px) {
+  .brand {
+    display: none;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.open {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #3232af;
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    font-size: 20px;
+  }
+
+  .menu-icon,
+  .hamburger-icon {
+    font-size: 18px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}  */
+
+
+
+/* Navbar.css */
+/* ... existing styles ... */
+
+/* .nav-main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  position: fixed;
+  z-index: 5;
+  background: white;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  color: #3232af;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  width: 25%;
+}
+@media (max-width: 768px) {
+  .nav-main {
+    height: 60px;
+  }
+
+  .nav-left {
+    width: 70%; 
+  }
+
+  .nav-right {
+    width: 30%;
+  }
+
+  .nav-right h3 {
+    display: none;
+  }
+
+  .nav-left h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-left {
+    width: 60%;
+  }
+}
+
+.nav-main.open {
+  background-color: #3232af;
+}
+
+.nav-main.open .nav-left h3 {
+  color: #fff;
+}
+
+.nav-main.open .nav-right {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-main.open .nav-right h3 {
+  font-size: 20px;
+}
+
+.nav-main.open .nav-links {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background-color: #3232af;
+  color: #fff;
+  transition: height 0.5s;
+  border: 1px solid red;
+}
+
+.nav-main.open .links-list {
+  flex-direction: column;
+  height: auto;
+  padding: 10px 0;
+}
+
+.nav-main.open .links-list li {
+  margin: 10px 0;
+}
+
+.nav-main.open .links-list a {
+  font-size: 18px;
+}
+
+.nav-main.open .menu-icon {
+  font-size: 24px;
+} */
+
+
+/* Add these styles to your CSS file */
+
+.nav-main {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top:0;
+  z-index: 5;
+  background: white;
+  padding: 10px 20px;
+  /* Add some padding for spacing */
+}
+
+.nav-left {
+  margin-left: '60px';
+  display: flex;
+  width: 45%;
+  justify-content: space-between;
+  color: #3232af;
+  align-items: center;
+}
+
+.nav-left h3 {
+  margin: 0 10px;
+}
+
+.about-pets {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  position: fixed;
+  top: -100px;
+  left: 30x;
+}
+
+.nav-footer {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: -50px;
+  background: #3232af;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.vertical-divider {
+  border-left: 1px solid gray;
+  height: 50px;
+  margin: 0 8px;
+}
+
+.nav-menu {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background-color: #3232af;
+  color: #fff;
+}
+
+.nav-menu ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  height: 60px;
+  align-items: center;
+}
+
+/* Add media queries for responsiveness */
+@media (max-width: 768px) {
+  .nav-main {
+    padding: 10px;
+  }
+
+  .nav-left {
+
+    width: 60%;
+  }
+
+  .nav-right {
+    width: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-main {
+    justify-content: space-around;
+    padding: 5px;
+  }
+
+  .hamburger {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .nav-left {
+    width: 60%;
+  }
+
+  .nav-right {
+    display: none !important;
+    width: 30% !important;
+  }
+  .nav-footer {
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    background: #3232af;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
