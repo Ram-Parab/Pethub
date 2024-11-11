@@ -45,50 +45,35 @@ function Signup() {
               <h2>Sign Up</h2>
             </div>
           </div>
-          {/* <div className="signup-social">
-            <span className="google">
-              <FcGoogle />
-              <span>Google</span>
-            </span>
-            or
-            <span className="facebook">
-              <BsFacebook />
-              <span>Facebook</span>
-            </span>
-          </div> */}
-          <br />
-          <hr />
           <form id="signup-form" onSubmit={handleSignup}>
-            <div className="input-group user-input-wrp">
-              <br />
-              <input
-                className="inputText"
-                type="text"
-                id="firstname"
-                name="firstname"
-                value={Firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-                required
-              />
-              <span className="floating-label">First Name</span>
+            <div className="name-fields">
+              <div className="user-input-wrp">
+                <input
+                  className="inputText"
+                  type="text"
+                  id="firstname"
+                  name="firstname"
+                  value={Firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                  required
+                />
+                <span className="floating-label">First Name</span>
+              </div>
+              <div className="user-input-wrp">
+                <input
+                  className="inputText"
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  value={Lastname}
+                  onChange={(e) => setLastname(e.target.value)}
+                  required
+                />
+                <span className="floating-label">Last Name</span>
+              </div>
             </div>
-            <br />
-            <div className="input-group user-input-wrp">
-              <br />
-              <input
-                className="inputText"
-                type="text"
-                id="lastname"
-                name="lastname"
-                value={Lastname}
-                onChange={(e) => setLastname(e.target.value)}
-                required
-              />
-              <span className="floating-label">Last Name</span>
-            </div>
-            <br />
-            <div className="input-group user-input-wrp">
-              <br />
+
+            <div className="user-input-wrp email-field">
               <input
                 className="inputText"
                 type="email"
@@ -100,9 +85,8 @@ function Signup() {
               />
               <span className="floating-label">Email</span>
             </div>
-            <br />
-            <div className="input-group user-input-wrp password-container">
-              <br />
+
+            <div className="user-input-wrp password-field">
               <div>
                 <input
                   className="inputText"
@@ -118,22 +102,8 @@ function Signup() {
                   {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <br />
             </div>
-            {/* <div className="input-group user-input-wrp">
-              <br />
-              <input
-                className="inputText"
-                type="password"
-                id="confirm-password"
-                name="confirm-password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-              <span className="floating-label">Confirm Password</span>
-            </div> */}
-            <br />
+
             <button type="submit" className="signup-button">
               Sign Up
             </button>

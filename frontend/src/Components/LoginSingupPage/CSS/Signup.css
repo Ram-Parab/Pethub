@@ -1,186 +1,207 @@
 .main-container {
   width: 100%;
+  min-height: 100vh;
   padding: 30px;
-  margin-top:100px;
-  /* padding-top: 60px; */
-  background-color: #e0e4ef;
-}
-.signup-main {
-  background: white;
-  width: 70%;
-  margin: auto;
-  border: 2px sodil gray;
-  border-radius: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   display: flex;
   align-items: center;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  justify-content: center;
 }
-.signup-container {
-  width: 55%;
+
+.signup-main {
+  background: white;
+  width: 80%;
+  max-width: 1200px;
   margin: auto;
-  padding: 0 40px 20px 40px;
-  border-radius: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: stretch;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.signp-image {
+  flex: 1;
+  background: linear-gradient(135deg, #6504b5, #3232af);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signp-image img {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.signp-image img:hover {
+  transform: scale(1.02);
+}
+
+.signup-container {
+  flex: 1;
+  padding: 30px 40px;
+  background: white;
 }
 
 .signup-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   margin-bottom: 20px;
-  margin-top: 30px;
-}
-.signup-header > div {
-  width: 50%;
-}
-.signup-header h2 {
-  font-size: 40px;
   text-align: center;
 }
-.signup-social {
-  margin-top: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.signup-social > span {
-  width: 30%;
-  padding: 5px;
-  border-radius: 10px;
-  border: 2px solid rgb(163, 163, 163);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.signup-social svg {
-  font-size: 30px;
-}
-.signup-social .facebook {
-  background: #3b5998;
-  color: white;
-}
-.signup-social .facebook svg {
-  color: white;
-}
-.signp-image img {
-  background: transparent;
+
+.signup-header h2 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6504b5, #3232af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Form styling */
-#signup-form {
-  display: flex;
-  flex-direction: column;
-}
-#password {
+.user-input-wrp {
   position: relative;
+  margin-bottom: 15px;
+}
+
+.user-input-wrp .inputText {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  height: 45px;
+}
+
+.user-input-wrp .inputText:focus {
+  border-color: #6504b5;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(101, 4, 181, 0.1);
+}
+
+.user-input-wrp .floating-label {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15px;
+  transition: 0.3s ease all;
+  color: #718096;
+  font-size: 16px;
+}
+
+.user-input-wrp input:focus ~ .floating-label,
+.user-input-wrp input:not(:focus):valid ~ .floating-label {
+  top: 0;
+  left: 10px;
+  font-size: 12px;
+  padding: 0 5px;
+  background: white;
+  color: #6504b5;
 }
 
 .password-toggle {
   position: absolute;
-  top: 23px;
-  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  color: #718096;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-/* Signup button */
+.password-toggle:hover {
+  color: #6504b5;
+}
+
 .signup-button {
-  background: linear-gradient(to right, #3232af, #04a69f);
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6504b5, #3232af);
   color: white;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 15px;
 }
 
 .signup-button:hover {
-  background: #3232af;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(50, 50, 175, 0.2);
 }
 
-.user-input-wrp {
-  position: relative;
-  width: 100%;
-}
-.user-input-wrp .inputText {
-  width: 100%;
-  padding-left: 10px;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid #777;
-  box-shadow: none !important;
-}
-.user-input-wrp .inputText:focus {
-  border-color: blue;
-  border-width: medium medium 2px;
-}
-.user-input-wrp .floating-label {
-  position: absolute;
-  pointer-events: none;
-  top: 18px;
-  left: 10px;
-  transition: 0.2s ease all;
-}
-.user-input-wrp input:focus ~ .floating-label,
-.user-input-wrp input:not(:focus):valid ~ .floating-label {
-  top: 0px;
-  left: 10px;
-  font-size: 13px;
-  opacity: 1;
-}
 .login-text {
-  font-size: 15px;
+  margin-top: 15px;
   text-align: center;
-  padding-top: 10px;
+  color: #4a5568;
+  font-size: 15px;
 }
 
-.signup-container a {
-  border-bottom: 1px solid blue;
-  color: blue;
+.login-text a {
+  color: #6504b5;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
 }
 
-/* Media query for responsiveness */
-@media screen and (max-width: 1460px) and (min-width: 1170px) {
+.login-text a:hover {
+  border-bottom-color: #6504b5;
+}
+
+hr {
+  margin: 20px 0;
+  border: none;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+@media (max-width: 1024px) {
   .signup-main {
-    width: 100%;
-    padding: 0 50px;
+    width: 90%;
   }
 }
 
-@media screen and (max-width: 1170px) {
+@media (max-width: 768px) {
   .signp-image {
     display: none;
   }
 
-  .signp-image img {
-    display: none;
-  }
-
   .signup-main {
-    width: 70%;
+    width: 95%;
   }
 
   .signup-container {
-    width: 80%;
-    margin: auto;
-    padding: 0 40px 20px 40px;
-    border-radius: 10px;
-  }
-}
-
-@media screen and (max-width: 850px) {
-  .signup-main {
-    width: 100%;
-    margin-top: 100px;
+    padding: 30px 20px;
   }
 
-  .signup-container {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 480px) {
   .signup-header h2 {
-    font-size: 20px;
+    font-size: 2rem;
   }
-  .signup-social > span {
-    width: 50%;
-  }
+}
+
+/* Make the name fields side by side */
+.name-fields {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.name-fields .user-input-wrp {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Adjust spacing for other fields */
+.email-field,
+.password-field {
+  margin-bottom: 15px;
 }
