@@ -1,133 +1,77 @@
 import { DATA_ERROR, DATA_SUCCESS, DATA_REQUEST } from "./actionType";
 import axios from "axios";
 
-export const getAllPets = (paramObj) => (dispatch) => {
-  dispatch({ type: DATA_REQUEST });
-  axios
-    .get(`https://pethub-u60q.onrender.com/pet`)
-    .then((res) => {
-      let mainData = []
-      // console.log(paramObj.params.gender);
-      if (paramObj.params.gender == null && paramObj.params.age == null && paramObj.params.breed == null&& paramObj.params.size == null) {
-        dispatch({ type: DATA_SUCCESS, payload: res.data });
-      }
-      else {
-        if (paramObj.params.gender !== null) {
-          const newBreeds = paramObj.params.gender.split(",")
-          let newData = []
-          newBreeds.forEach(element => {
-            const temp = res.data.filter(
-              (el) => el.gender === element
-            )
-            newData = [...temp, ...newData]
-          });
-          mainData = mainData.concat(newData)
-        }
-        if (paramObj.params.age !== null) {
-          const newBreeds = paramObj.params.age.split(",")
-          let newData = []
-          newBreeds.forEach(element => {
-            if (mainData.length == 0) {
-              const temp = res.data.filter(
-                (el) => el.age === element
-              )
-              newData = [...temp, ...newData]
-            }
-            else {
-              const temp = mainData.filter(
-                (el) => el.age === element
-              )
-              newData = [...temp, ...newData]
-            }
-          });
-          mainData = newData
-        }
-        if (paramObj.params.breed !== null) {
-          const newBreeds = paramObj.params.breed.split(",")
-          let newData = []
-          newBreeds.forEach(element => {
-            if (mainData.length == 0) {
-              const temp = res.data.filter(
-                (el) => el.breed === element
-              )
-              newData = [...temp, ...newData]
-            }
-            else {
-              const temp = mainData.filter(
-                (el) => el.breed === element
-              )
-              newData = [...temp, ...newData]
-            }
-          });
-          mainData = newData
-        }
-        if (paramObj.params.size !== null) {
-          const newBreeds = paramObj.params.size.split(",")
-          let newData = []
-          newBreeds.forEach(element => {
-            if (mainData.length == 0) {
-              const temp = res.data.filter(
-                (el) => el.size === element
-              )
-              newData = [...temp, ...newData]
-            }
-            else {
-              const temp = mainData.filter(
-                (el) => el.size === element
-              )
-              newData = [...temp, ...newData]
-            }
-          });
-          mainData = newData
-        }
-        // else if (paramObj.params.breed) {
-        //       // console.log(paramObj.params.breed)
-        //       const newBreeds=paramObj.params.breed.split(",")
-        //       // console.log(newBreeds)
-        //       let newData=[]
-        //       newBreeds.forEach(element => {
-        //         const temp=res.data.filter(
-        //           (el) => el.breed === element
-        //         )
-        //         newData=[...temp,...newData]
-        //       });
-        //       // console.log(newData)
-        //       dispatch({
-        //         type: DATA_SUCCESS,
-        //         payload: newData
-        //       });
-        //     } else if (paramObj.params.age) {
-        //       dispatch({
-        //         type: DATA_SUCCESS,
-        //         payload: res.data.filter((el, i) => el.age === paramObj.params.age),
-        //       });
-        //     } else if (paramObj.params.size) {
-        //       dispatch({
-        //         type: DATA_SUCCESS,
-        //         payload: res.data.filter((el, i) => el.size === paramObj.params.size),
-        //       });
-        //     } else {
-        // let filteredData=new Set(mainData)
-        // console.log(filteredData)
-        dispatch({ type: DATA_SUCCESS, payload: mainData });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: DATA_ERROR });
+// Create axios instance with base URL
+const api = axios.create({
+  baseURL: 'https://pethub-u60q.onrender.com'
+});
+
+export const getAllPets = (paramObj) => async (dispatch) => {
+  try {
+    // Log the start of the API call
+    console.log("Starting API call with params:", paramObj);
+
+    // Dispatch request action
+    dispatch({ type: DATA_REQUEST });
+
+    // Make the API call
+    const response = await api.get('/pet', {
+      params: paramObj.params
     });
 
+    // Log the API response
+    console.log("API Response:", response.data);
 
+    // If no filters are applied
+    if (!paramObj.params.gender && !paramObj.params.breed && 
+        !paramObj.params.age && !paramObj.params.size) {
+      dispatch({ type: DATA_SUCCESS, payload: response.data });
+      return;
+    }
+
+    // Filter the data based on params
+    let filteredData = response.data;
+
+    if (paramObj.params.gender) {
+      const genders = paramObj.params.gender.split(',');
+      filteredData = filteredData.filter(pet => genders.includes(pet.gender));
+    }
+
+    if (paramObj.params.breed) {
+      const breeds = paramObj.params.breed.split(',');
+      filteredData = filteredData.filter(pet => breeds.includes(pet.breed));
+    }
+
+    if (paramObj.params.age) {
+      const ages = paramObj.params.age.split(',');
+      filteredData = filteredData.filter(pet => ages.includes(pet.age));
+    }
+
+    if (paramObj.params.size) {
+      const sizes = paramObj.params.size.split(',');
+      filteredData = filteredData.filter(pet => sizes.includes(pet.size));
+    }
+
+    // Log the filtered data
+    console.log("Filtered Data:", filteredData);
+
+    // Dispatch success with filtered data
+    dispatch({ type: DATA_SUCCESS, payload: filteredData });
+
+  } catch (error) {
+    // Log any errors
+    console.error("API Error:", error);
+    dispatch({ type: DATA_ERROR });
+  }
 };
-export const getOnePet = (id) => (dispatch) => {
-  console.log(id);
-  dispatch({ type: DATA_REQUEST });
-  axios
-    .get(`https://pethub-u60q.onrender.com/pet/${id}`)
-    .then((data) => {
-      dispatch({ type: DATA_SUCCESS, payload: data.data });
-      console.log(data.data);
-    })
-    .catch((err) => {
-      dispatch({ type: DATA_ERROR });
-    });
+
+export const getOnePet = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DATA_REQUEST });
+    const response = await api.get(`/pet/${id}`);
+    dispatch({ type: DATA_SUCCESS, payload: response.data });
+  } catch (error) {
+    console.error("Error fetching pet details:", error);
+    dispatch({ type: DATA_ERROR });
+  }
 };

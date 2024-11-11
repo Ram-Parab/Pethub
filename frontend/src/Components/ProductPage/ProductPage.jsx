@@ -1,85 +1,58 @@
-import { styled } from "styled-components";
+import { Box } from "@chakra-ui/react";
 import Card from "./Card";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPets } from "../../Redux/Pets/action";
 import { useSearchParams } from "react-router-dom";
+import "./ProductPage.css";
 
 const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const data = useSelector((store) => store.petData.data);
+  const { data, isLoading, isError } = useSelector((store) => store.petData);
 
-  let obj = {
-    params: {
-      gender: searchParams.get("gender"),
-      breed: searchParams.get("breed"),
-      age: searchParams.get("age"),
-      size: searchParams.get("size"),
-    },
-  };
-// console.log(obj.params.breed)
   useEffect(() => {
-    dispatch(getAllPets(obj));
-  }, [searchParams]);
+    // Create params object
+    const params = {
+      gender: searchParams.get("gender") || null,
+      breed: searchParams.get("breed") || null,
+      age: searchParams.get("age") || null,
+      size: searchParams.get("size") || null,
+    };
+
+    // Log the params to verify they're correct
+    console.log("Search Params:", params);
+
+    // Dispatch the action
+    dispatch(getAllPets({ params }));
+  }, [dispatch, searchParams]);
+
+  // Log the data to verify it's being received
+  console.log("Redux Store Data:", data);
 
   return (
-    <DIV>
-      <div className="sidebar">
+    <Box className="product-page">
+      <Box className="sidebar">
         <Sidebar />
-      </div>
-      <div className="cardsLayout">
-        {data.length===0 ? <p style={{textAlign:"center",fontSize:"30px",fontWeight:"800"}}>Data Not Found!!</p>:null}
-        {data.map((el, i) => {
-          return <Card key={el._id} data={el} />;
-        })}
-      </div>
-    </DIV>
+      </Box>
+      <Box className="cardsLayout">
+        {data?.length === 0 ? (
+          <Box
+            textAlign="center"
+            fontSize="xl"
+            fontWeight="bold"
+            color="gray.500"
+            p={10}
+          >
+            No pets found matching your criteria
+          </Box>
+        ) : (
+          data?.map((el) => <Card key={el._id} data={el} />)
+        )}
+      </Box>
+    </Box>
   );
 };
-
-const DIV = styled.div`
-  display: flex;
-  margin-top:100px;
-  //justify-content: space-evenly;
-  background-color: #f3f3f3;
-
-  .sidebar {
-    background: white;
-    width: 25%;
-    padding:50px;
-  }
- 
-  .cardsLayout {
-    width: 69%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-  }
-
-  @media (max-width: 800px) {
-    .cardsLayout {
-    width: 70%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    }
-  }
-
-  @media (max-width: 650px) {
-    .cardsLayout {
-    width: 57%;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 20px;
-    }
-    .sidebar {
-    background: white;
-    width: 40%;
-    padding:30px;
-  }
-  }
-`;
 
 export default ProductPage;
